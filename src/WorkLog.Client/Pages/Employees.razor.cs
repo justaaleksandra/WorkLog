@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -16,15 +17,26 @@ namespace WorkLog.Client.Pages
     {
         [Inject] public HttpClient Http { get; set; }
 
+        private string StatusMessage;    
+        private string StatusClass;     
+
+
         private IList<Employee> _employees;
         private Employee _employee;
         private int _employeesCount;
         private int _employeesNextId;
         private bool isAddNewPressed = false;
 
+        [Required]
         private string _firstName { get; set; }
+       
+        [Required]
         private string _lastName { get; set; }
+      
+        [Required]
         private string _position { get; set; }
+       
+        [Required]
         private decimal _hourlyWage { get; set; }
         private Employee employeeToAdd => new Employee
         {
@@ -33,6 +45,7 @@ namespace WorkLog.Client.Pages
             Position = _position,
             HourlyWage = _hourlyWage,
         };
+        ////private Employee employeeToAdd;
 
         public async Task GetEmployees()
         {
@@ -46,14 +59,22 @@ namespace WorkLog.Client.Pages
             isAddNewPressed = false;
         }
 
-        public void AddEmployeesContent()
+        public async Task AddEmployeesAction()
         {
             isAddNewPressed = true;
-            _employeesNextId = _employeesCount + 1;
-            //_firstName = "Halo";
-            //_lastName = "Mario";
-            //_position = "Programmer";
-            //_hourlyWage = 40;
+            var e = await Http.GetJsonAsync<IList<Employee>>("api/employee");
+            _employeesNextId = e.Count() + 1;
+        }
+
+        protected void HandleValidSubmit()
+        {
+            StatusClass = "alert-info";
+            StatusMessage = DateTime.Now + " Handle valid submit";
+        }
+        protected void HandleInvalidSubmit()
+        {
+            StatusClass = "alert-danger";
+            StatusMessage = DateTime.Now + " Handle invalid submit";
         }
     }
 }
