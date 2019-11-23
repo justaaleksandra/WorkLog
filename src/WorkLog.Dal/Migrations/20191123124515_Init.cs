@@ -12,7 +12,7 @@ namespace WorkLog.Dal.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    InternalId = table.Column<Guid>(nullable: false),
+                    InternalId = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Position = table.Column<string>(nullable: true),

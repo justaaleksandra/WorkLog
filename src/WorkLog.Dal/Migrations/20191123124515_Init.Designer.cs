@@ -10,7 +10,7 @@ using WorkLog.Dal;
 namespace WorkLog.Dal.Migrations
 {
     [DbContext(typeof(WorkLogContext))]
-    [Migration("20191123073957_Init")]
+    [Migration("20191123124515_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,8 +33,8 @@ namespace WorkLog.Dal.Migrations
                     b.Property<decimal>("HourlyWage")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("InternalId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("InternalId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");

@@ -67,5 +67,17 @@ namespace WorkLog.Bll.Services
 
             return await GetEmployees();
         }
+
+        public async Task<int> GetNumberOfEmployees()
+        {
+            var employees = await _employeeRepository.Find();
+            return employees.Count;
+        }
+
+        public async Task<int> GetNextValidIdForEmployee()
+        {
+            var employees = await _employeeRepository.Find();
+            return employees.Count + 1;
+        }
     }
 }

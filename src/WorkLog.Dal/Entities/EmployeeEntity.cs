@@ -7,7 +7,7 @@ namespace WorkLog.Dal.Entities
     public class EmployeeEntity : IEntity
     {
         public Guid Id { get; set; }
-        public Guid InternalId { get; set; }
+        public int InternalId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Position { get; set; }

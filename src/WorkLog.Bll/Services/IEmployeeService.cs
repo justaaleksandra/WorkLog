@@ -13,5 +13,8 @@ namespace WorkLog.Bll.Services
         Task<Employee> AddEmployee(Employee employee);
         Task<Employee> UpdateEmployee(Guid employeeId);
         Task<IList<Employee>> RemoveEmployee(Guid employeeId);
+        Task<int> GetNumberOfEmployees();
+        Task<int> GetNextValidIdForEmployee();
+
     }
 }

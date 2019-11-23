@@ -1,5 +1,9 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using WorkLog.Bll;
+using WorkLog.Bll.Profiles;
+using WorkLog.Dal;
 
 namespace WorkLog.Client
 {
@@ -15,3 +19,5 @@ namespace WorkLog.Client
         }
     }
 }
+
+

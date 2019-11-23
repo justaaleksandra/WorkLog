@@ -39,11 +39,11 @@ namespace WorkLog.Server.Controllers
             var employee = new Employee
             {
                 Id = Guid.NewGuid(),
-                InternalId = Guid.NewGuid(),
-                FirstName = "Dario",
-                LastName = "Przesieradlo",
-                HourlyWage = 30,
-                Position = "Pomagier"
+                InternalId = await _employeeService.GetNextValidIdForEmployee(),
+                FirstName = "Bill",
+                LastName = "Clark",
+                HourlyWage = 60,
+                Position = "Szef"
             };
             var employeeId = await _employeeService.AddEmployee(employee);
 

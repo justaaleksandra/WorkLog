@@ -1,0 +1,50 @@
+﻿@page "/employees"
+@using WorkLog.Bll.Models
+@using WorkLog.Bll.Services
+@using WorkLog.Dal.Entities
+@using WorkLog.Dal.Repositories
+
+<h1>Workers List</h1>
+<br>
+
+@if (_employees == null)
+{
+    <p>Click Load to see all employees</p>
+}
+<button class="btn btn-primary" @onclick="GetEmployees">Load</button>
+
+@if (_employees == null)
+{
+    <a href="C:\Users\justa\source\repos\WorkLog\src\WorkLog.Client\Pages\Employees.razor.cs">C:\Users\justa\source\repos\WorkLog\src\WorkLog.Client\Pages\Employees.razor.cs</a>
+
+}
+else
+{
+    <p>Currently @_employeesCount employees work</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Internal Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Position</th>
+                <th>Hourly Wage</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in _employees)
+            {
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.InternalId</td>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.LastName</td>
+                    <td>@employee.Position</td>
+                    <td>@employee.HourlyWage</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
