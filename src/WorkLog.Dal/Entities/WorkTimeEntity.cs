@@ -13,5 +13,6 @@ namespace WorkLog.Dal.Entities
         public decimal HourlyWage { get; set; }
         public decimal ActualWage { get; set; }
         public Guid EmployeeId { get; set; }
+        public EmployeeEntity Employee { get; set; }
     }
 }

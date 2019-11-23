@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <UserSecretsId>9928bdf1-50ea-4891-b5c0-c613db49f2be</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,6 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0-preview3.19554.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.0-preview3.19554.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0-preview3.19554.8" />
   </ItemGroup>
 
 </Project>

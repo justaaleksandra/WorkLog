@@ -12,5 +12,7 @@ namespace WorkLog.Dal.Entities
         public string LastName { get; set; }
         public string Position { get; set; }
         public decimal HourlyWage { get; set; }
+
+        public ICollection<WorkTimeEntity> WorkTimes { get; set; }
     }
 }

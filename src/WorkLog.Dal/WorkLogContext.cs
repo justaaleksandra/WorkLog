@@ -14,6 +14,14 @@ namespace WorkLog.Dal
 
         public DbSet<EmployeeEntity> Employees { get; set; }
         public DbSet<WorkTimeEntity> WorkingTimes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<WorkTimeEntity>()
+                .HasOne(wt => wt.Employee)
+                .WithMany(e => e.WorkTimes)
+                .HasForeignKey(wt => wt.EmployeeId);
+        }
     }
 
 }

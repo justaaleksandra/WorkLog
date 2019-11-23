@@ -10,6 +10,10 @@ namespace WorkLog.Bll.Services
     {
         Task<List<Employee>> GetEmployees();
         Task<Employee> GetEmployee(Guid id);
-        Task<Guid> AddEmployee(Employee employee);
+        Task<Employee> AddEmployee(Employee employee);
+        Task<Employee> UpdateEmployee(Employee employee);
+        Task<List<Employee>> RemoveEmployee(Employee employee);
+
+
     }
 }

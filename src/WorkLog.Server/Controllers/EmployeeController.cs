@@ -32,7 +32,7 @@ namespace WorkLog.Server.Controllers
             var employee = await _employeeService.GetEmployee(id);
             return Json(employee);
         }
-
+         
         [HttpPost]
         public async Task<IActionResult> AddEmployee()
         {
@@ -41,9 +41,10 @@ namespace WorkLog.Server.Controllers
                 Id = Guid.NewGuid(),
                 InternalId = Guid.NewGuid(),
                 FirstName = "Dario",
-                LastName = "Sulak",
-
-            }
+                LastName = "Przesieradlo",
+            };
+            var employeeId = await _employeeService.AddEmployee(employee);
+            return Json(employeeId);
         }
     }
 }
