@@ -34,16 +34,16 @@ namespace WorkLog.Server.Controllers
         }
          
         [HttpPost]
-        public async Task<IActionResult> AddEmployee() // add parameters
+        public async Task<IActionResult> AddEmployee(Employee employeeToAdd) // add parameters
         {
             var employee = new Employee
             {
                 Id = Guid.NewGuid(),
                 InternalId = await _employeeService.GetNextValidIdForEmployee(),
-                FirstName = "Bill",
-                LastName = "Clark",
-                HourlyWage = 60,
-                Position = "Szef"
+                FirstName = employeeToAdd.FirstName,
+                LastName = employeeToAdd.LastName,
+                Position = employeeToAdd.Position,
+                HourlyWage = employeeToAdd.HourlyWage,
             };
             var employeeId = await _employeeService.AddEmployee(employee);
 
