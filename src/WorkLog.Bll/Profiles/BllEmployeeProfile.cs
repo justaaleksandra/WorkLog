@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using WorkLog.Bll.Models;
 using WorkLog.Dal.Entities;
 
-namespace WorkLog.Bll
+namespace WorkLog.Bll.Profiles
 {
     public class BllEmployeeProfile : Profile
     {

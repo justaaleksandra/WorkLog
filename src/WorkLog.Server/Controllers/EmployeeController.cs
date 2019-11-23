@@ -16,7 +16,7 @@ namespace WorkLog.Server.Controllers
 
         public EmployeeController(IEmployeeService employeeService)
         {
-            employeeService = _employeeService;
+            _employeeService = employeeService;
         }
 
         [HttpGet]
@@ -26,15 +26,15 @@ namespace WorkLog.Server.Controllers
             return Json(employees);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrders(Guid id)
+        [HttpGet("{employeeId}")]
+        public async Task<IActionResult> GetEmployee(Guid employeeId)
         {
-            var employee = await _employeeService.GetEmployee(id);
+            var employee = await _employeeService.GetEmployee(employeeId);
             return Json(employee);
         }
          
         [HttpPost]
-        public async Task<IActionResult> AddEmployee()
+        public async Task<IActionResult> AddEmployee() // add parameters
         {
             var employee = new Employee
             {
@@ -42,9 +42,30 @@ namespace WorkLog.Server.Controllers
                 InternalId = Guid.NewGuid(),
                 FirstName = "Dario",
                 LastName = "Przesieradlo",
+                HourlyWage = 30,
+                Position = "Pomagier"
             };
             var employeeId = await _employeeService.AddEmployee(employee);
+
             return Json(employeeId);
+        }
+
+        [HttpPut("{employeeId}")]
+        public async Task<IActionResult> UpdateEmployee(Guid employeeId) // add parameters
+        {
+            var employee = await _employeeService.GetEmployee(employeeId);
+
+            var employeeUpdated = await _employeeService.UpdateEmployee(employeeId);
+
+            return Json(employeeUpdated);
+        }
+
+        [HttpDelete("{employeeId}")]
+        public async Task<IActionResult> RemoveEmployee(Guid employeeId)
+        {
+            var Employees = await _employeeService.RemoveEmployee(employeeId);
+
+            return Json(Employees);
         }
     }
 }

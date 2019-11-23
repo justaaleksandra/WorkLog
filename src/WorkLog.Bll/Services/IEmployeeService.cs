@@ -8,12 +8,10 @@ namespace WorkLog.Bll.Services
 {
     public interface IEmployeeService
     {
-        Task<List<Employee>> GetEmployees();
+        Task<IList<Employee>> GetEmployees();
         Task<Employee> GetEmployee(Guid id);
         Task<Employee> AddEmployee(Employee employee);
-        Task<Employee> UpdateEmployee(Employee employee);
-        Task<List<Employee>> RemoveEmployee(Employee employee);
-
-
+        Task<Employee> UpdateEmployee(Guid employeeId);
+        Task<IList<Employee>> RemoveEmployee(Guid employeeId);
     }
 }

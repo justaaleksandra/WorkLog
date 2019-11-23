@@ -21,16 +21,16 @@ namespace WorkLog.Bll.Services
             _mapper = mapper;
         }
 
-        public async Task<List<Employee>> GetEmployees()
+        public async Task<IList<Employee>> GetEmployees()
         {
-            var employees = await _employeeRepository.Find();
+            var employeesEntity = await _employeeRepository.Find();
             
-            return _mapper.Map<List<Employee>>(employees);
+            return _mapper.Map<List<Employee>>(employeesEntity);
         }
 
-        public async Task<Employee> GetEmployee(Employee employee)
+        public async Task<Employee> GetEmployee(Guid employeeId)
         {
-            var employeeEntity = await _employeeRepository.Find(employee.Id);
+            var employeeEntity = await _employeeRepository.Find(employeeId);
             
             return _mapper.Map<Employee>(employeeEntity);
         }
@@ -41,23 +41,27 @@ namespace WorkLog.Bll.Services
             var employeeId = await _employeeRepository.Add(employeeEntity);
             await _employeeRepository.SaveChanges();
             
-            return await GetEmployee(employee);
+            return await GetEmployee(employee.Id);
         }
 
-        public async Task<Employee> UpdateEmployee(Employee employee)
+        public async Task<Employee> UpdateEmployee(Guid employeeId)
         {
-            var employeeToUpdate = await GetEmployee(employee);
-            var employeeEntity = _mapper.Map<EmployeeEntity>(employeeToUpdate);
+            var employeeEntity = await _employeeRepository.Find(employeeId);
+            employeeEntity.HourlyWage = 40;
+            employeeEntity.Position = "Starszy Pomagier";
+            employeeEntity.FirstName = "Kario";
+            employeeEntity.LastName = "Mario";
+
             _employeeRepository.Update(employeeEntity);
             var employeeChange = await _employeeRepository.SaveChanges();
 
-            return await GetEmployee(employee);
+            return await GetEmployee(employeeId);
         }
 
-        public async Task<List<Employee>> RemoveEmployee(Employee employee)
+        public async Task<IList<Employee>> RemoveEmployee(Guid employeeId)
         {
-            var employeeToRemove = await GetEmployee(employee);
-            var employeeEntity = _mapper.Map<EmployeeEntity>(employeeToRemove);
+            var employeeEntity = await _employeeRepository.Find(employeeId);
+
             _employeeRepository.Remove(employeeEntity);
             await _employeeRepository.SaveChanges();
 
