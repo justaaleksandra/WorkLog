@@ -33,7 +33,7 @@ namespace WorkLog.Client.Pages
             public string HourlyWage { get; set; }
         }
 
-        private EmployeeViewModel _toAdd = new EmployeeViewModel
+        private EmployeeViewModel _employeeToAdd = new EmployeeViewModel
         {
             FirstName = "",
             LastName = "",
@@ -50,7 +50,7 @@ namespace WorkLog.Client.Pages
         }
         public async Task AddEmployees()
         {
-            var employee = _mapper.Map<Employee>(_toAdd);
+            var employee = _mapper.Map<Employee>(_employeeToAdd);
             _employee = await Http.PostJsonAsync<Employee>("api/employee", employee);
             await GetEmployees();
             

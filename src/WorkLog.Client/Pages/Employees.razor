@@ -20,10 +20,7 @@ else
     <br>
 </span>
 
-@if (_employees == null)
-{
-}
-else
+@if (_employees != null)
 {
     <table class="table">
         <thead>
@@ -54,11 +51,11 @@ else
 
 @if (isAddNewPressed)
 {
-    <EditForm Model="@_toAdd">
-        First Name: <InputText @bind-Value="@_toAdd.FirstName" /><br />
-        Last Name: <InputText @bind-Value="@_toAdd.LastName" /><br />
-        Position: <InputText @bind-Value="@_toAdd.Position" /><br />
-        Hourly Wage (int): <InputText @bind-Value="@_toAdd.HourlyWage" /><br />
+    <EditForm Model="@_employeeToAdd">
+        First Name: <InputText @bind-Value="@_employeeToAdd.FirstName" /><br />
+        Last Name: <InputText @bind-Value="@_employeeToAdd.LastName" /><br />
+        Position: <InputText @bind-Value="@_employeeToAdd.Position" /><br />
+        Hourly Wage (int): <InputText @bind-Value="@_employeeToAdd.HourlyWage" /><br />
     </EditForm>
     <button class="btn btn-primary" @onclick="AddEmployees">Save changes</button>
 }
