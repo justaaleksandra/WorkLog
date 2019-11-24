@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using WorkLog.Bll.Models;
 using WorkLog.Dal.Entities;
 using WorkLog.Dal.Repositories;
@@ -39,6 +37,7 @@ namespace WorkLog.Bll.Services
         {
             var employeeEntity = _mapper.Map<EmployeeEntity>(employee);
             var employeeId = await _employeeRepository.Add(employeeEntity);
+
             await _employeeRepository.SaveChanges();
             
             return await GetEmployee(employee.Id);
@@ -68,12 +67,14 @@ namespace WorkLog.Bll.Services
         public async Task<int> GetNumberOfEmployees()
         {
             var employees = await _employeeRepository.Find();
+
             return employees.Count;
         }
 
         public async Task<int> GetNextValidIdForEmployee()
         {
             var employees = await _employeeRepository.Find();
+
             return employees.Count + 1;
         }
     }

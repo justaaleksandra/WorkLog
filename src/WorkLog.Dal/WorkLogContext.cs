@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WorkLog.Dal.Entities;
 
 namespace WorkLog.Dal
@@ -23,5 +20,4 @@ namespace WorkLog.Dal
                 .HasForeignKey(wt => wt.EmployeeId);
         }
     }
-
 }

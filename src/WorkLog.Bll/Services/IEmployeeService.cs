@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using WorkLog.Bll.Models;
 
@@ -15,6 +14,5 @@ namespace WorkLog.Bll.Services
         Task<IList<Employee>> RemoveEmployee(Guid employeeId);
         Task<int> GetNumberOfEmployees();
         Task<int> GetNextValidIdForEmployee();
-
     }
 }

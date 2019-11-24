@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using WorkLog.Bll.Models;
-using WorkLog.Dal.Entities;
 
 namespace WorkLog.Bll.Services
 {

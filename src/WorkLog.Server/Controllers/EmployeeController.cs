@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WorkLog.Bll.Models;
@@ -30,6 +28,7 @@ namespace WorkLog.Server.Controllers
         public async Task<IActionResult> GetEmployee(Guid employeeId)
         {
             var employee = await _employeeService.GetEmployee(employeeId);
+
             return Json(employee);
         }
 

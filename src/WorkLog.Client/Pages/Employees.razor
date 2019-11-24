@@ -22,14 +22,13 @@ else
 
 @if (_employees == null)
 {
-
 }
 else
 {
     <table class="table">
         <thead>
             <tr>
-                <th>Delete / Increase Salary</th>
+                <th>Delete</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Position</th>
@@ -42,7 +41,6 @@ else
                 <tr>
                     <td>
                         <button class="btn btn-danger" @onclick="@(e => DeleteEmployee(employee))">x</button>
-                        @*<button class="btn btn-dark" @onclick="@(e => UpdateHourlyWage(employee))">PLN</button>*@
                     </td>
                     <td>@employee.FirstName</td>
                     <td>@employee.LastName</td>
@@ -56,11 +54,11 @@ else
 
 @if (isAddNewPressed)
 {
-    <EditForm Model="@employeeToAdd">
-        First Name: <InputText @bind-Value="@employeeToAdd.FirstName" /><br />
-        Last Name: <InputText @bind-Value="@employeeToAdd.LastName" /><br />
-        Position: <InputText @bind-Value="@employeeToAdd.Position" /><br />
-        Hourly Wage: <InputText @bind-Value="@employeeToAdd.HourlyWage" /><br />
+    <EditForm Model="@_toAdd">
+        First Name: <InputText @bind-Value="@_toAdd.FirstName" /><br />
+        Last Name: <InputText @bind-Value="@_toAdd.LastName" /><br />
+        Position: <InputText @bind-Value="@_toAdd.Position" /><br />
+        Hourly Wage (int): <InputText @bind-Value="@_toAdd.HourlyWage" /><br />
     </EditForm>
     <button class="btn btn-primary" @onclick="AddEmployees">Save changes</button>
 }

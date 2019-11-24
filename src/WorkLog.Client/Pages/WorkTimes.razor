@@ -1,0 +1,31 @@
+﻿@page "/workTimes"
+
+<h1>Counter</h1>
+<br>
+<br>
+<EjsCalendar></EjsCalendar>
+
+
+@if (_employees == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (var employee in _employees.OrderBy(e => e.LastName))
+    {
+        <button class="btn btn-primary" @onclick="@(e => SelectEmployee(employee))">@employee.LastName @employee.FirstName</button>
+    }
+    <br>
+    <br>
+}
+
+@if (isAddNewPressed)
+{
+    <EditForm Model="@_workTimeToAdd">
+        <p>Name: @_selectedEmployee.LastName @_selectedEmployee.FirstName</p>
+        Hours (int) <input type="number" @bind-value="@_workTimeToAdd.Hours" /><br />
+    </EditForm>
+    <button class="btn btn-primary" @onclick="AddHours">Save changes</button>
+}
+<p>H: @_workTimeToAdd.Hours</p>

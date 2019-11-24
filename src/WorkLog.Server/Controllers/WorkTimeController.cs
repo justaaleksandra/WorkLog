@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WorkLog.Bll.Models;
 using WorkLog.Bll.Services;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WorkLog.Server.Controllers
 {
@@ -16,7 +12,6 @@ namespace WorkLog.Server.Controllers
     {
         private readonly IWorkTimeService _workTimeService;
         private readonly IEmployeeService _employeeService;
-
 
         public WorkTimeController(IWorkTimeService workTimeService, IEmployeeService employeeService)
         {
@@ -28,6 +23,7 @@ namespace WorkLog.Server.Controllers
         public async Task<IActionResult> GetWorkTimes()
         {
             var workTimes = await _workTimeService.GetWorkTimes();
+
             return Json(workTimes);
         }
 
@@ -45,12 +41,10 @@ namespace WorkLog.Server.Controllers
         }
 
         [HttpPost]
-        //public async Task<IActionResult> AddWorkTime(WorkTime workTimeToAdd, Guid employeeId)
-        public async Task<IActionResult> AddWorkTime(WorkTime workTime)
+        public async Task<IActionResult> AddWorkTime([FromBody]WorkTime workTime)
         {
             var employee = await _employeeService.GetEmployee(workTime.EmployeeId);
 
-            workTime.EmployeeId = employee.Id;
             workTime.HourlyWage = employee.HourlyWage;
             workTime.ActualWage = employee.HourlyWage;
             
@@ -60,7 +54,6 @@ namespace WorkLog.Server.Controllers
         }
 
         [HttpPut("{employeeId}")]
-        //public async Task<IActionResult> UpdateEmployee(Employee employee)
         public async Task<IActionResult> UpdateEmployee(Guid employeeId)
         {
             var employeeHoursUpdated = await _workTimeService.UpdateEmployeeWorkTime(employeeId);
@@ -69,7 +62,6 @@ namespace WorkLog.Server.Controllers
         }
 
         [HttpDelete("{employeeId}")]
-        //public async Task<IActionResult> RemoveWorkTime(Guid workTimeId, Guid employeeId)
         public async Task<IActionResult> RemoveWorkTime(Guid employeeId)
         {
             var employee = await _employeeService.GetEmployee(employeeId);

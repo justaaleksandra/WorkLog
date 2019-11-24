@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore.Internal;
 using WorkLog.Bll.Models;
 using WorkLog.Dal.Entities;
 using WorkLog.Dal.Repositories;
@@ -44,6 +42,7 @@ namespace WorkLog.Bll.Services
         {
             var workTimeEntity = _mapper.Map<WorkTimeEntity>(workTime);
             var workTimeId = await _workTimRepository.Add(workTimeEntity);
+
             await _workTimRepository.SaveChanges();
 
             var employeesEntity = await _employeeRepository.Find();

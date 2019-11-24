@@ -9,8 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WorkLog.Bll.Profiles;
-
 
 namespace WorkLog.Server
 {
@@ -23,8 +21,6 @@ namespace WorkLog.Server
 
         public IConfiguration Configuration { get; set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -34,10 +30,7 @@ namespace WorkLog.Server
                     opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                         new[] {"application/octet-stream"});
                 })
-                .AddAutoMapper(typeof(BllWorkTimeProfile),
-                    typeof(BllEmployeeProfile),
-                    typeof(DalEmployeeProfile),
-                    typeof(DalWorkTimeProfile))
+                .AddAutoMapper(typeof(BllMapperProfile))
                 .AddDbContext<WorkLogContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString(nameof(WorkLogContext))))
                 .AddRepositories()
@@ -45,7 +38,6 @@ namespace WorkLog.Server
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseResponseCompression();
