@@ -44,26 +44,15 @@ namespace WorkLog.Bll.Services
             return await GetEmployee(employee.Id);
         }
 
-        public async Task<Employee> UpdateEmployee(Guid employeeId)
+        public async Task<Employee> UpdateEmployee(Employee employee)
         {
-            var employeeEntity = await _employeeRepository.Find(employeeId);
-            employeeEntity.HourlyWage = 40;
-            employeeEntity.Position = "Starszy Pomagier";
-            employeeEntity.FirstName = "Kario";
-            employeeEntity.LastName = "Mario";
+            var employeeEntity = await _employeeRepository.Find(employee.Id);
+            employeeEntity.HourlyWage = employee.HourlyWage+5;
 
             _employeeRepository.Update(employeeEntity);
             var employeeChange = await _employeeRepository.SaveChanges();
 
-            return await GetEmployee(employeeId);
-        }
-        public async Task<IList<Employee>> UpdateEmployeesAll(List<Employee> employees)
-        {
-            var employeesEntity = _mapper.Map<List<EmployeeEntity>>(employees);
-            _employeeRepository.UpdateAll(employees);
-            var employeeChange = await _employeeRepository.SaveChanges();
-
-            return await GetEmployees();
+            return await GetEmployee(employee.Id);
         }
 
         public async Task<IList<Employee>> RemoveEmployee(Guid employeeId)

@@ -18,6 +18,8 @@ else
 <span>
     <button class="btn btn-primary" @onclick="GetEmployees">Load</button>
     <br>
+    <br>
+    <p>Click Add new to add new employee</p>
     <button class="btn btn-primary" @onclick="AddEmployeesAction">Add new</button>
     <br>
 </span>
@@ -31,7 +33,7 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Delete / Increase Salary</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Position</th>
@@ -39,16 +41,18 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var employee in _employees.OrderBy(e => e.InternalId))
+            @foreach (var employee in _employees.OrderBy(e => e.LastName))
             {
                 <tr>
-                    <td>@employee.InternalId</td>
+                    <td>
+                        <button class="btn btn-danger" @onclick="@(e => DeleteEmployee(employee))">x</button>
+                        @*<button class="btn btn-dark" @onclick="@(e => UpdateHourlyWage(employee))">PLN</button>*@
+                    </td>
                     <td>@employee.FirstName</td>
                     <td>@employee.LastName</td>
                     <td>@employee.Position</td>
                     <td>@employee.HourlyWage</td>
                 </tr>
-                <button class="btn btn-danger" @onclick="@(e => ConfirmDeleteEmployee(employee))">x</button>
             }
         </tbody>
     </table>
@@ -57,18 +61,10 @@ else
 @if (isAddNewPressed)
 {
     <EditForm Model="@employeeToAdd">
-        <i>@_employeesNextId</i>
         First Name: <InputText @bind-Value="@employeeToAdd.FirstName" /><br />
         Last Name: <InputText @bind-Value="@employeeToAdd.LastName" /><br />
         Position: <InputText @bind-Value="@employeeToAdd.Position" /><br />
         Hourly Wage: <InputText @bind-Value="@employeeToAdd.HourlyWage" /><br />
     </EditForm>
-    if (isSaved)
-    {
-        <button class="btn btn-success">Saved</button>
-    }
-    else
-    {
-        <button class="btn btn-primary" @onclick="AddEmployees">Save changes</button>
-    }
+    <button class="btn btn-primary" @onclick="AddEmployees">Save changes</button>
 }

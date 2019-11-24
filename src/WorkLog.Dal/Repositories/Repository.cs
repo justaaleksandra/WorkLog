@@ -28,7 +28,6 @@ namespace WorkLog.Dal.Repositories
         public void Remove(TEntity entity) => _context.Remove(entity);
 
         public void Update(TEntity entity) => _context.Update(entity);
-        public void UpdateAll(List<TEntity> entity) => _context.Update(entity);
 
         public async Task<TEntity> Find(Guid id) => await Query.FirstOrDefaultAsync(x =>  x.Id == id);
 

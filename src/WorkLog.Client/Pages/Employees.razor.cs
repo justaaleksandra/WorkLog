@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -23,25 +24,12 @@ namespace WorkLog.Client.Pages
 
 
         private IList<Employee> _employees;
+        private IOrderedEnumerable<Employee> _employeesSorted;
         private Employee _employee;
         private int _employeesCount;
-        private int _employeesNextId;
         private bool isAddNewPressed = false;
+        private bool isUpdateHourlyWagePressed = false;
         private bool isSaved = false;
-
-        [Required]
-        private string _firstName { get; set; }
-       
-        [Required]
-        private string _lastName { get; set; }
-      
-        [Required]
-        private string _position { get; set; }
-       
-        [Required]
-        private decimal _hourlyWage { get; set; }
-
-
         public partial class newEmployee
         {
             public string FirstName { get; set; }
@@ -61,6 +49,7 @@ namespace WorkLog.Client.Pages
         {
             _employees = await Http.GetJsonAsync<IList<Employee>>("api/employee");
             _employeesCount = _employees.Count();
+
             await InvokeAsync(StateHasChanged);
         }
         public async Task AddEmployees()
@@ -73,20 +62,30 @@ namespace WorkLog.Client.Pages
                 HourlyWage = decimal.Parse(employeeToAdd.HourlyWage)
             };
             _employee = await Http.PostJsonAsync<Employee>("api/employee", employee);
-            Console.WriteLine(JsonConvert.SerializeObject(_employee));
+            await GetEmployees();
             isAddNewPressed = false;
+            isUpdateHourlyWagePressed = false;
         }
 
         public async Task AddEmployeesAction()
         {
             isAddNewPressed = true;
             var e = await Http.GetJsonAsync<IList<Employee>>("api/employee");
-            _employeesNextId = e.Count() + 1;
         }
 
-        public async Task ConfirmDeleteEmployee(Employee employee)
+        public async Task DeleteEmployee(Employee employee)
         {
             var responseMessage = await Http.DeleteAsync("/api/employee/" + employee.Id);
+            await GetEmployees();
         }
+
+        //public async Task UpdateHourlyWage(Employee employee)
+        //{
+        //    isUpdateHourlyWagePressed = true;
+        //    var e = await Http.GetJsonAsync<Employee>("api/employee" + employee.Id);
+        //    await Http.PutJsonAsync("/api/employee/UpdateHourlyWage", e);
+        //    await GetEmployees();
+        //    isUpdateHourlyWagePressed = false;
+        //}
     }
 }

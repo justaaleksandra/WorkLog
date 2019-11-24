@@ -14,7 +14,6 @@ namespace WorkLog.Dal.Repositories
         Task<Guid> Add(TEntity entity);
         void Remove(TEntity entity);
         void Update(TEntity entity);
-        void UpdateAll(List<TEntity> entity);
         Task<TEntity> Find(Guid id);
         Task<IList<TEntity>> Find();
         Task<int> SaveChanges();

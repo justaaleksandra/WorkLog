@@ -59,12 +59,10 @@ namespace WorkLog.Server.Controllers
             return Json(employeeId);
         }
 
-        [HttpPut("{employeeId}")]
-        public async Task<IActionResult> UpdateEmployee(Guid employeeId) // add parameters
+        [HttpPut("UpdateHourlyWage")]
+        public async Task<IActionResult> UpdateEmployee(Employee employee) // add parameters
         {
-            var employee = await _employeeService.GetEmployee(employeeId);
-
-            var employeeUpdated = await _employeeService.UpdateEmployee(employeeId);
+            var employeeUpdated = await _employeeService.UpdateEmployee(employee);
 
             return Json(employeeUpdated);
         }
@@ -75,25 +73,6 @@ namespace WorkLog.Server.Controllers
             var Employees = await _employeeService.RemoveEmployee(employeeId);
 
             return Json(Employees);
-        }
-
-
-        [HttpPut("updateEmployeeInternalId")]
-        public async Task<IActionResult> UpdateEmployee()
-        {
-            var employees = await _employeeService.GetEmployees();
-            var sortedEmployees = employees.OrderBy(e => e.InternalId);
-            var count = await _employeeService.GetNumberOfEmployees();
-            var i = 1;
-
-            foreach (var employee in sortedEmployees)
-            {
-                employee.InternalId = i;
-                i++
-            }
-
-
-            return Json(sortedEmployees);
         }
     }
 }
