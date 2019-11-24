@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Watch Include="../**/*.razor" />
+    <Watch Remove="Pages\WorkTime.razor" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.1.0-preview3.19555.2" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.1.0-preview3.19555.2" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.1.0-preview3.19555.2" />
@@ -17,6 +18,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorkLog.Bll\WorkLog.Bll.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

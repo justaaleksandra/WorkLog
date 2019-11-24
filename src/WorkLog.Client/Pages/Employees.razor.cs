@@ -10,34 +10,35 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 using System.Web;
+using AutoMapper;
 using Newtonsoft.Json;
-
 
 namespace WorkLog.Client.Pages
 {
     public partial class Employees
     {
         [Inject] public HttpClient Http { get; set; }
+        [Inject] public IMapper _mapper { get; set; }
 
         private string StatusMessage;    
-        private string StatusClass;     
-
-
         private IList<Employee> _employees;
         private IOrderedEnumerable<Employee> _employeesSorted;
+
         private Employee _employee;
         private int _employeesCount;
         private bool isAddNewPressed = false;
         private bool isUpdateHourlyWagePressed = false;
         private bool isSaved = false;
-        public partial class newEmployee
+
+        public partial class ViewModelEmployee
         {
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string Position { get; set; }
             public string HourlyWage { get; set; }
         }
-        private newEmployee employeeToAdd = new newEmployee()
+
+        private ViewModelEmployee employeeToAdd = new ViewModelEmployee
         {
             FirstName = "",
             LastName = "",
@@ -54,15 +55,10 @@ namespace WorkLog.Client.Pages
         }
         public async Task AddEmployees()
         {
-            var employee = new Employee
-            {
-                FirstName = employeeToAdd.FirstName,
-                LastName = employeeToAdd.LastName,
-                Position = employeeToAdd.Position,
-                HourlyWage = decimal.Parse(employeeToAdd.HourlyWage)
-            };
+            var employee = _mapper.Map<Employee>(employeeToAdd);
             _employee = await Http.PostJsonAsync<Employee>("api/employee", employee);
             await GetEmployees();
+            
             isAddNewPressed = false;
             isUpdateHourlyWagePressed = false;
         }
