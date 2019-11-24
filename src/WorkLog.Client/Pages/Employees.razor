@@ -11,6 +11,10 @@
 {
     <p>Click Load to see all employees</p>
 }
+else
+{
+    <p>Currently @_employeesCount employees work</p>
+}
 <span>
     <button class="btn btn-primary" @onclick="GetEmployees">Load</button>
     <br>
@@ -24,7 +28,6 @@
 }
 else
 {
-    <p>Currently @_employeesCount employees work</p>
     <table class="table">
         <thead>
             <tr>
@@ -52,38 +55,19 @@ else
 }
 @if (isAddNewPressed)
 {
-    <form acrion="">
-        <table class="table">
-            <tbody>
-                <tr>
-                    <td><i>@_employeesNextId</i></td>
-                    <td><input type="text" id="fname" value=""></td>
-                    <td><input type="text" id="lname" value=""></td>
-                    <td><input type="text" id="position" value=""></td>
-                    <td><input type="text" id="hourlyWage" value=""></td>
-                </tr>
-            </tbody>
-        </table>
-        <button type="submit" class="btn btn-primary" @onclick="AddEmployees">Save changes</button>
-    </form>
-
-    <EditForm Model="@employeeToAdd" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
-        <div class="alert @StatusClass">@StatusMessage</div>
-
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
-        <div class="form-group">
-            <label for="FirstName">FirstName: </label>
-            <InputText Id="name" Class="form-control" @bind-Value="@employeeToAdd.FirstName"></InputText>
-            <ValidationMessage For="@(() => employeeToAdd.FirstName)" />
-        </div>
-
-        <div class="form-group">
-            <label for="LastName">LastName: </label>
-            <InputTextArea Id="body" Class="form-control" @bind-Value="@employeeToAdd.LastName"></InputTextArea>
-            <ValidationMessage For="@(() => employeeToAdd.LastName)" />
-        </div>
-        <button type="submit">Ok</button>
+    <EditForm Model="@employeeToAdd">
+        <i>@_employeesNextId</i>
+        First Name: <InputText @bind-Value="@employeeToAdd.FirstName" /><br />
+        Last Name: <InputText @bind-Value="@employeeToAdd.LastName" /><br />
+        Position: <InputText @bind-Value="@employeeToAdd.Position" /><br />
+        Hourly Wage: <InputText @bind-Value="@employeeToAdd.HourlyWage" /><br />
     </EditForm>
+    <button class="btn btn-primary" @onclick="AddEmployees">Save changes</button>
 }
+
+
+<b>Binding check:</b>
+<p> First Name: @employeeToAdd.FirstName</p>
+<p> Last Name: @employeeToAdd.LastName</p>
+<p> Position: @employeeToAdd.Position </p>
+<p> Hourly Wage: @employeeToAdd.HourlyWage</p>

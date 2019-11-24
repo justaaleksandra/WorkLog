@@ -38,14 +38,22 @@ namespace WorkLog.Client.Pages
        
         [Required]
         private decimal _hourlyWage { get; set; }
-        private Employee employeeToAdd => new Employee
+
+
+        public partial class newEmployee
         {
-            FirstName = _firstName,
-            LastName = _lastName,
-            Position = _position,
-            HourlyWage = _hourlyWage,
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Position { get; set; }
+            public string HourlyWage { get; set; }
+        }
+        private newEmployee employeeToAdd = new newEmployee()
+        {
+            FirstName = "",
+            LastName = "",
+            Position = "",
+            HourlyWage = ""
         };
-        ////private Employee employeeToAdd;
 
         public async Task GetEmployees()
         {
@@ -54,7 +62,14 @@ namespace WorkLog.Client.Pages
         }
         public async Task AddEmployees()
         {
-            _employee = await Http.PostJsonAsync<Employee>("api/employee", employeeToAdd);
+            var employee = new Employee
+            {
+                FirstName = employeeToAdd.FirstName,
+                LastName = employeeToAdd.LastName,
+                Position = employeeToAdd.Position,
+                HourlyWage = decimal.Parse(employeeToAdd.HourlyWage)
+            };
+            _employee = await Http.PostJsonAsync<Employee>("api/employee", employee);
             Console.WriteLine(JsonConvert.SerializeObject(_employee));
             isAddNewPressed = false;
         }
@@ -64,17 +79,6 @@ namespace WorkLog.Client.Pages
             isAddNewPressed = true;
             var e = await Http.GetJsonAsync<IList<Employee>>("api/employee");
             _employeesNextId = e.Count() + 1;
-        }
-
-        protected void HandleValidSubmit()
-        {
-            StatusClass = "alert-info";
-            StatusMessage = DateTime.Now + " Handle valid submit";
-        }
-        protected void HandleInvalidSubmit()
-        {
-            StatusClass = "alert-danger";
-            StatusMessage = DateTime.Now + " Handle invalid submit";
         }
     }
 }
