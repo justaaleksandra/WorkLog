@@ -8,20 +8,17 @@
 
   <ItemGroup>
     <Watch Include="../**/*.razor" />
-    <Watch Remove="Pages\WorkTime.razor" />
+    <Watch Remove="Pages\WorkTimes.razor" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.1.0-preview3.19555.2" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.1.0-preview3.19555.2" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.1.0-preview3.19555.2" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.DevServer" Version="3.1.0-preview3.19555.2" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Syncfusion.EJ2.Blazor" Version="17.3.0.28-beta" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WorkLog.Bll\WorkLog.Bll.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

@@ -44,21 +44,16 @@ namespace WorkLog.Server.Controllers
             return Json(workTime);
         }
 
-        [HttpPost("{employeeId}")]
+        [HttpPost]
         //public async Task<IActionResult> AddWorkTime(WorkTime workTimeToAdd, Guid employeeId)
-        public async Task<IActionResult> AddWorkTime(Guid employeeId)
+        public async Task<IActionResult> AddWorkTime(WorkTime workTime)
         {
-            var employee = await _employeeService.GetEmployee(employeeId);
+            var employee = await _employeeService.GetEmployee(workTime.EmployeeId);
 
-            var workTime = new WorkTime()
-            {
-                Id = Guid.NewGuid(),
-                Hours = TimeSpan.FromHours(5),
-                HourlyWage = employee.HourlyWage,
-                ActualWage = employee.HourlyWage,
-                CreatedOnUtc = DateTime.UtcNow,
-                EmployeeId = employeeId
-            };
+            workTime.EmployeeId = employee.Id;
+            workTime.HourlyWage = employee.HourlyWage;
+            workTime.ActualWage = employee.HourlyWage;
+            
             var newEmployeeNewId = await _workTimeService.AddEmployeeWorkTime(workTime);
 
             return Json(newEmployeeNewId);

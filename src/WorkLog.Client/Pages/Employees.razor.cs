@@ -27,7 +27,6 @@ namespace WorkLog.Client.Pages
         private Employee _employee;
         private int _employeesCount;
         private bool isAddNewPressed = false;
-        private bool isUpdateHourlyWagePressed = false;
         private bool isSaved = false;
 
         public partial class ViewModelEmployee
@@ -60,7 +59,6 @@ namespace WorkLog.Client.Pages
             await GetEmployees();
             
             isAddNewPressed = false;
-            isUpdateHourlyWagePressed = false;
         }
 
         public async Task AddEmployeesAction()

@@ -1,10 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using WorkLog.Bll;
-using WorkLog.Bll.Profiles;
 using WorkLog.Client.Profiles;
-using WorkLog.Dal;
 
 namespace WorkLog.Client
 {
@@ -13,7 +10,10 @@ namespace WorkLog.Client
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddAutoMapper(typeof(ViewModelEmployeeProfile));
+                .AddAutoMapper(typeof(ViewModelEmployeeProfile),
+                    typeof(ViewModelWorkTimeProfile),
+                    typeof(BllEmployeeProfile),
+                    typeof(BllWorkTimeProfile));
         }
 
         public void Configure(IComponentsApplicationBuilder app)

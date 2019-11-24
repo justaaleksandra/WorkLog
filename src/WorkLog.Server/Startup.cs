@@ -34,10 +34,10 @@ namespace WorkLog.Server
                     opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                         new[] {"application/octet-stream"});
                 })
-                .AddAutoMapper(typeof(BllWorkTimeProfile))
-                .AddAutoMapper(typeof(BllEmployeeProfile))
-                .AddAutoMapper(typeof(DalEmployeeProfile))
-                .AddAutoMapper(typeof(DalWorkTimeProfile))
+                .AddAutoMapper(typeof(BllWorkTimeProfile),
+                    typeof(BllEmployeeProfile),
+                    typeof(DalEmployeeProfile),
+                    typeof(DalWorkTimeProfile))
                 .AddDbContext<WorkLogContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString(nameof(WorkLogContext))))
                 .AddRepositories()

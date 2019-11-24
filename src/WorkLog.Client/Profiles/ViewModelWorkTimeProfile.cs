@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using WorkLog.Bll.Models;
 
 namespace WorkLog.Client.Profiles
 {
@@ -11,7 +7,8 @@ namespace WorkLog.Client.Profiles
     {
         public ViewModelWorkTimeProfile()
         {
-            CreateMap<ViewModelWorkTimeProfile, WorkTime>();
+            CreateMap<Pages.WorkTimes.ViewModelWorkTime, Bll.Models.WorkTime>()
+                .ForMember(d => d.Hours, e => e.MapFrom(s => TimeSpan.FromHours(s.Hours)));
         }
     }
 }
