@@ -10,6 +10,8 @@ using WorkLog.Bll.Services;
 
 namespace WorkLog.Server.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class WorkTimeController : Controller
     {
         private readonly IWorkTimeService _workTimeService;
@@ -22,49 +24,61 @@ namespace WorkLog.Server.Controllers
             _employeeService = employeeService;
         }
 
-        [HttpGet("work")]
+        [HttpGet]
         public async Task<IActionResult> GetWorkTimes()
         {
             var workTimes = await _workTimeService.GetWorkTimes();
             return Json(workTimes);
         }
 
-        [HttpGet("work/{employeeId}")]
-        public async Task<IActionResult> GetEmployee(Guid employeeId)
+        [HttpGet("{employeeId}")]
+        public async Task<IActionResult> GetWorkTime(Guid employeeId)
         {
             var employee = await _employeeService.GetEmployee(employeeId);
-            return Json(employee);
+            var workTime = new WorkTime();
+            if (employee.Id != Guid.Empty)
+            {
+                workTime = await _workTimeService.GetEmployeeWorkTime(employee);
+            }
+
+            return Json(workTime);
         }
 
-        [HttpGet("work/{workTime}")]
-        public async Task<IActionResult> GetEmployee(WorkTime workTime)
-        {
-            var employeeWorkTime = await _workTimeService.GetEmployeeWorkTime(workTime);
-            return Json(employeeWorkTime);
-        }
-
-        [HttpPost("work/{employeeId}")]
-        public async Task<IActionResult> AddEmployee(WorkTime workTimeToAdd, Guid employeeId)
+        [HttpPost("{employeeId}")]
+        //public async Task<IActionResult> AddWorkTime(WorkTime workTimeToAdd, Guid employeeId)
+        public async Task<IActionResult> AddWorkTime(Guid employeeId)
         {
             var employee = await _employeeService.GetEmployee(employeeId);
 
             var workTime = new WorkTime()
             {
                 Id = Guid.NewGuid(),
-                Hours = workTimeToAdd.Hours,
+                Hours = TimeSpan.FromHours(5),
                 HourlyWage = employee.HourlyWage,
                 ActualWage = employee.HourlyWage,
-                CreatedOnUtc = DateTime.UtcNow
+                CreatedOnUtc = DateTime.UtcNow,
+                EmployeeId = employeeId
             };
             var newEmployeeNewId = await _workTimeService.AddEmployeeWorkTime(workTime);
 
             return Json(newEmployeeNewId);
         }
 
-        [HttpDelete("work/{workTimeId}/{employeeId}")]
-        public async Task<IActionResult> RemoveEmployeeWorkTime(Guid workTimeId, Guid employeeId)
+        [HttpPut("{employeeId}")]
+        //public async Task<IActionResult> UpdateEmployee(Employee employee)
+        public async Task<IActionResult> UpdateEmployee(Guid employeeId)
         {
-            var workTimes = await _workTimeService.RemoveEmployeeWorkTime(workTimeId, employeeId);
+            var employeeHoursUpdated = await _workTimeService.UpdateEmployeeWorkTime(employeeId);
+
+            return Json(employeeHoursUpdated);
+        }
+
+        [HttpDelete("{employeeId}")]
+        //public async Task<IActionResult> RemoveWorkTime(Guid workTimeId, Guid employeeId)
+        public async Task<IActionResult> RemoveWorkTime(Guid employeeId)
+        {
+            var employee = await _employeeService.GetEmployee(employeeId);
+            var workTimes = await _workTimeService.RemoveEmployeeWorkTime(employee);
 
             return Json(workTimes);
         }
