@@ -43,7 +43,7 @@ namespace WorkLog.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEmployee(Employee employeeToAdd) // add parameters
+        public async Task<IActionResult> AddEmployee(Employee employeeToAdd)
         {
             var employee = new Employee
             {
@@ -60,7 +60,7 @@ namespace WorkLog.Server.Controllers
         }
 
         [HttpPut("UpdateHourlyWage")]
-        public async Task<IActionResult> UpdateEmployee(Employee employee) // add parameters
+        public async Task<IActionResult> UpdateEmployee(Employee employee)
         {
             var employeeUpdated = await _employeeService.UpdateEmployee(employee);
 
@@ -70,9 +70,9 @@ namespace WorkLog.Server.Controllers
         [HttpDelete("{employeeId}")]
         public async Task<IActionResult> RemoveEmployee(Guid employeeId)
         {
-            var Employees = await _employeeService.RemoveEmployee(employeeId);
+            var employees = await _employeeService.RemoveEmployee(employeeId);
 
-            return Json(Employees);
+            return Json(employees);
         }
     }
 }
