@@ -57,6 +57,14 @@ namespace WorkLog.Bll.Services
 
             return await GetEmployee(employeeId);
         }
+        public async Task<IList<Employee>> UpdateEmployeesAll(List<Employee> employees)
+        {
+            var employeesEntity = _mapper.Map<List<EmployeeEntity>>(employees);
+            _employeeRepository.UpdateAll(employees);
+            var employeeChange = await _employeeRepository.SaveChanges();
+
+            return await GetEmployees();
+        }
 
         public async Task<IList<Employee>> RemoveEmployee(Guid employeeId)
         {

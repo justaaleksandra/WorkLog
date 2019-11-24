@@ -47,12 +47,13 @@ else
                     <td>@employee.LastName</td>
                     <td>@employee.Position</td>
                     <td>@employee.HourlyWage</td>
-
                 </tr>
+                <button class="btn btn-danger" @onclick="@(e => ConfirmDeleteEmployee(employee))">x</button>
             }
         </tbody>
     </table>
 }
+
 @if (isAddNewPressed)
 {
     <EditForm Model="@employeeToAdd">
@@ -62,12 +63,12 @@ else
         Position: <InputText @bind-Value="@employeeToAdd.Position" /><br />
         Hourly Wage: <InputText @bind-Value="@employeeToAdd.HourlyWage" /><br />
     </EditForm>
-    <button class="btn btn-primary" @onclick="AddEmployees">Save changes</button>
+    if (isSaved)
+    {
+        <button class="btn btn-success">Saved</button>
+    }
+    else
+    {
+        <button class="btn btn-primary" @onclick="AddEmployees">Save changes</button>
+    }
 }
-
-
-<b>Binding check:</b>
-<p> First Name: @employeeToAdd.FirstName</p>
-<p> Last Name: @employeeToAdd.LastName</p>
-<p> Position: @employeeToAdd.Position </p>
-<p> Hourly Wage: @employeeToAdd.HourlyWage</p>

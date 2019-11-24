@@ -8,6 +8,7 @@ using WorkLog.Bll.Models;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
+using System.Web;
 using Newtonsoft.Json;
 
 
@@ -26,6 +27,7 @@ namespace WorkLog.Client.Pages
         private int _employeesCount;
         private int _employeesNextId;
         private bool isAddNewPressed = false;
+        private bool isSaved = false;
 
         [Required]
         private string _firstName { get; set; }
@@ -59,6 +61,7 @@ namespace WorkLog.Client.Pages
         {
             _employees = await Http.GetJsonAsync<IList<Employee>>("api/employee");
             _employeesCount = _employees.Count();
+            await InvokeAsync(StateHasChanged);
         }
         public async Task AddEmployees()
         {
@@ -79,6 +82,11 @@ namespace WorkLog.Client.Pages
             isAddNewPressed = true;
             var e = await Http.GetJsonAsync<IList<Employee>>("api/employee");
             _employeesNextId = e.Count() + 1;
+        }
+
+        public async Task ConfirmDeleteEmployee(Employee employee)
+        {
+            var responseMessage = await Http.DeleteAsync("/api/employee/" + employee.Id);
         }
     }
 }
